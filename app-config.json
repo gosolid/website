@@ -1,0 +1,5 @@
+{
+  "url": "https://gosolid.dev",
+  "allowedDomains": ["gosolid.dev"],
+  "appDomains": ["gosolid.dev", "statcounter.com"]
+}
