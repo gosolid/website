@@ -1,0 +1,33 @@
+.fullscreen {
+  user-select: none;
+  -webkit-user-drag: none;
+
+  background: black;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100000;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  justify-content: center;
+
+  &.show {
+    display: flex;
+  }
+
+  img,
+  video {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+.hidden {
+  display: none;
+}

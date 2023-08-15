@@ -1,0 +1,48 @@
+
+.youtube {
+  border-radius: 1em;
+  overflow: hidden;
+  transform: translateY(0px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  background: black;
+
+  > div {
+    position: relative;
+  }
+
+  margin: 0 auto;
+
+  &.youtube-portrait {
+    max-width: 300px;
+
+    > div {
+      padding-bottom: 177.77%;
+    }
+  }
+
+  &.youtube-square {
+    > div {
+      padding-bottom: 100%;
+    }
+  }
+
+  &.youtube-landscape {
+    > div {
+      padding-bottom: 56.25%;
+    }
+  }
+  
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media print {
+  .youtube {
+    display: none;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "pdf-server",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.8",
+    "wait-on": "^6.0.1"
+  },
+  "license": "MIT",
+  "scripts": {
+    "docker-compose": "docker compose",
+    "docker-compose:run": "yarn run docker-compose build && yarn run docker-compose run -T --rm pdf-server node",
+    "docker-compose:down": "yarn run docker-compose down",
+    "book": "yarn docker-compose:run build-book; yarn docker-compose:down",
+    "books": "yarn docker-compose:run build-books; yarn docker-compose:down"
+  },
+  "type": "module"
+}

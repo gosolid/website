@@ -1,0 +1,40 @@
+.menu-button {
+  display: flex;
+  width: 1em;
+  height: 1em;
+  align-items: center;
+  justify-content: center;
+  svg {
+    width: 1em !important;
+    height: 1em !important;
+
+
+    path {
+      fill: currentColor;
+      stroke: currentColor;
+      stroke-width: 8px;
+    }
+  }
+
+  &.left {
+
+  }
+
+  &.up {
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &.down {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &.right {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}

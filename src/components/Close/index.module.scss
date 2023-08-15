@@ -1,0 +1,42 @@
+.close {
+  display: flex;
+  width: 1em;
+  height: 1em;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin: -0.25em;
+
+  svg {
+    width: 1em !important;
+    height: 1em !important;
+
+    path {
+      fill: currentColor;
+      stroke: currentColor;
+      stroke-width: 0;
+    }
+  }
+
+  &.left {
+
+  }
+
+  &.up {
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &.down {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &.right {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}

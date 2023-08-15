@@ -1,0 +1,22 @@
+[
+  {
+    "name": "About",
+    "slug": "about",
+    "sort": "desc",
+    "default": true,
+    "children": [
+      {
+        "name": "Blog",
+        "slug": "blog",
+        "sort": "desc",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Docs",
+    "slug": "docs",
+    "sort": "desc",
+    "children": []
+  }
+]

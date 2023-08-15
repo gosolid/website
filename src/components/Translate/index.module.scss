@@ -1,0 +1,37 @@
+:global(.goog-te-banner-frame) {
+  display: none !important;
+}
+
+:global(.goog-te-gadget) {
+  display: none !important;
+}
+
+:global(#google_translate_element2) {
+  display: none !important;
+}
+
+:global(#translate-widget) {
+  margin: 0 auto;
+  color: var(--color-secondary);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: inherit;
+    font: 400 12px var(--font-ui);
+    border: 1px solid var(--color-secondary);
+    border-radius: 4px;
+    margin: 0;
+    padding: 0.5em calc(0.5em + 24px) 0.5em 0.5em;
+    background: none;
+    outline: none;
+
+    + .chevron {
+      margin-left: -24px;
+      pointer-events: none;
+    }
+  }
+}

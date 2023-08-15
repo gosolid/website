@@ -1,0 +1,19 @@
+version: '3.1'
+    
+services:
+  pdf-server:
+    build:
+      context: .
+    volumes:
+      - ../../content/books.json:/app/books.json:ro
+      - ../../public/books/:/books/
+    depends_on:
+      - serve
+    environment:
+      - SITE=http://serve:8000
+
+  serve:
+    build: serve/
+    volumes:
+      - ../../public:/public
+    

@@ -1,0 +1,77 @@
+diff --git a/node_modules/gatsby-plugin-offline/gatsby-node.js b/node_modules/gatsby-plugin-offline/gatsby-node.js
+index 3dec1da..579a778 100644
+--- a/node_modules/gatsby-plugin-offline/gatsby-node.js
++++ b/node_modules/gatsby-plugin-offline/gatsby-node.js
+@@ -65,17 +65,15 @@ function getAssetsForChunks(chunks) {
+ function getPrecachePages(globs, base) {
+   var precachePages = [];
+   globs.forEach(function (page) {
+-    var matches = glob.sync(base + page);
++    var matches = glob.sync(base + page, { nodir: true });
+     matches.forEach(function (path) {
+       var isDirectory = fs.lstatSync(path).isDirectory();
+       var precachePath;
+ 
+       if (isDirectory && fs.existsSync(path + "/index.html")) {
+         precachePath = path + "/index.html";
+-      } else if (path.endsWith(".html")) {
+-        precachePath = path;
+       } else {
+-        return;
++        precachePath = path;
+       }
+ 
+       if (precachePages.indexOf(precachePath) === -1) {
+@@ -95,6 +93,7 @@ exports.onPostBuild = function (args, _ref3) {
+       debug = _ref3$debug === void 0 ? undefined : _ref3$debug,
+       _ref3$workboxConfig = _ref3.workboxConfig,
+       workboxConfig = _ref3$workboxConfig === void 0 ? {} : _ref3$workboxConfig;
++  var excludePagesGlobs = _ref3.excludePages ? _ref3.excludePages : [];
+   var pathPrefix = args.pathPrefix,
+       reporter = args.reporter;
+   var rootDir = "public"; // Get exact asset filenames for app and offline app shell chunks
+@@ -111,15 +110,19 @@ exports.onPostBuild = function (args, _ref3) {
+   }
+ 
+   var offlineShellPath = process.cwd() + "/" + rootDir + "/offline-plugin-app-shell-fallback/index.html";
++  var excludePages = new Set(getPrecachePages(excludePagesGlobs.filter(x => typeof x === 'string'), process.cwd() + "/" + rootDir));
+   var precachePages = [offlineShellPath].concat(getPrecachePages(precachePagesGlobs, process.cwd() + "/" + rootDir).filter(function (page) {
+-    return page !== offlineShellPath;
++    return page !== offlineShellPath && !excludePages.has(page) && !excludePagesGlobs.filter(x => typeof x === 'function').reduce((a, b) => a || b(page), false);
+   }));
+ 
+   var criticalFilePaths = _.uniq(flat(precachePages.map(function (page) {
+     return getResourcesFromHTML(page, pathPrefix);
+   })));
+ 
+-  var globPatterns = files.concat([// criticalFilePaths doesn't include HTML pages (we only need this one)
++  precachePages = precachePages.map(page => path.relative(path.resolve(process.cwd(), rootDir), page))
++  precachePages = precachePages.filter(page => path.extname(page) === '.html');
++
++  var globPatterns = files.concat([...precachePages,
+   "offline-plugin-app-shell-fallback/index.html"].concat(criticalFilePaths));
+   var manifests = ["manifest.json", "manifest.webmanifest"];
+   manifests.forEach(function (file) {
+@@ -166,7 +169,6 @@ exports.onPostBuild = function (args, _ref3) {
+   };
+ 
+   var combinedOptions = _.merge(options, workboxConfig);
+-
+   var idbKeyvalFile = "idb-keyval-iife.min.js";
+ 
+   var idbKeyvalSource = require.resolve("idb-keyval/dist/" + idbKeyvalFile);
+diff --git a/node_modules/gatsby-plugin-offline/get-resources-from-html.js b/node_modules/gatsby-plugin-offline/get-resources-from-html.js
+index 98ff032..aee1531 100644
+--- a/node_modules/gatsby-plugin-offline/get-resources-from-html.js
++++ b/node_modules/gatsby-plugin-offline/get-resources-from-html.js
+@@ -12,6 +12,10 @@ module.exports = function (htmlPath, pathPrefix) {
+   // load index.html to pull scripts/links necessary for proper offline reload
+   var html;
+ 
++  if (path.extname(htmlPath) !== '.html') {
++    return [htmlPath];
++  }
++
+   try {
+     // load index.html to pull scripts/links necessary for proper offline reload
+     html = fs.readFileSync(path.resolve(htmlPath));

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "About",
+    "slug": "/"
+  },
+  {
+    "title": "Docs",
+    "slug": "/docs/"
+  },
+  {
+    "title": "Open Source",
+    "children": [
+      {
+        "title": "Collective",
+        "slug": "https://opencollective.com/gosolid"
+      },
+      {
+        "title": "GitHub",
+        "slug": "https://github.com/gosolid"
+      }
+    ]
+  },
+  {
+    "title": "Blog",
+    "slug": "/blog/"
+  }
+]
